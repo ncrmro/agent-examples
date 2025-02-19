@@ -1,3 +1,4 @@
+# NOTE: rather than making one query it ended up making two diffrent calls for each cuisine
 # frozen_string_literal: true
 
 require 'langchain'
@@ -15,26 +16,40 @@ class OpenStreetMapOverPassTool
   define_function :search_restaurants,
                   description: 'Search for restaurants in a given city with optional cuisine filters' do
     property :city, type: 'string', description: 'The city name to search for restaurants', required: true
-    # property :cuisines, type: 'array', description: 'Optional array of cuisines to filter restaurants by',
-    #                     required: false
+    property :cuisines, type: 'string', description: 'Optional comma seperated array of cuisines to filter restaurants by',
+                        required: false
   end
 
   def initialize; end
 
-  def search_restaurants(city:, cuisines: [])
-    cuisine_filter = cuisines.map { |cuisine| "node['cuisine'='#{cuisine}'](area.searchArea);" }.join("\n")
+  def search_restaurants(city:, cuisines:)
+    if cuisines && !cuisines.empty?
+      cuisine_query = cuisines.downcase.split(',').map(&:strip).join('|') # Format for Overpass QL
 
-    query = <<~QUERY
-      [out:json];
-      area[name="#{city}"]->.searchArea;
-      (
-        node["amenity"="restaurant"](area.searchArea);
-        way["amenity"="restaurant"](area.searchArea);
-        relation["amenity"="restaurant"](area.searchArea);
-        #{cuisine_filter}
-      );
-      out center;
-    QUERY
+      # Overpass QL query with multiple cuisine types
+      query = <<~QUERY
+        [out:json];
+        area[name="#{city}"]->.searchArea;
+        (
+          node["amenity"="restaurant"]["cuisine"~"#{cuisine_query}"](area.searchArea);
+          way["amenity"="restaurant"]["cuisine"~"#{cuisine_query}"](area.searchArea);
+          relation["amenity"="restaurant"]["cuisine"~"#{cuisine_query}"](area.searchArea);
+        );
+        out center;
+      QUERY
+    else
+      # Default query without cuisine filter
+      query = <<~QUERY
+        [out:json];
+        area[name="#{city}"]->.searchArea;
+        (
+          node["amenity"="restaurant"](area.searchArea);
+          way["amenity"="restaurant"](area.searchArea);
+          relation["amenity"="restaurant"](area.searchArea);
+        );
+        out center;
+      QUERY
+    end
 
     response = HTTParty.get(OVERPASS_URL, query: { data: query })
     data = JSON.parse(response.body)
@@ -57,7 +72,7 @@ assistant = Langchain::Assistant.new(
   instructions: "You're a helpful AI assistant that can search for restaurants",
   tools: [OpenStreetMapOverPassTool.new]
 )
-assistant.add_message_and_run!(content: 'What are some Mexican resturants in Houston?')
+assistant.add_message_and_run!(content: 'What are some Mexican, Chinese or Mediterrian resturants in Houston?')
 
 pp assistant.messages
 # Check the response in the last message in the conversation
