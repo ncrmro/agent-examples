@@ -6,10 +6,12 @@ For at least the next seven days my goal is to build an Assistant that uses some
 ## Day 1 [Open Street Map Restaurant Finder](0-openstreet-map.rb)
 
 This assistant uses the Open Street Map API to search a city for restaurants of different types of Cusiens
-```markdown
-User: What are some Mexican, Chinese or Mediterrian resturants in Houston?' 
 
-Agent:
+> User: What are some Mexican, Chinese or Mediterrian resturants in Houston?' 
+
+```markdown
+Agent Response
+
 Here are some restaurants in Houston that serve Mexican, Chinese, or Mediterranean cuisine:
 
 ### Mexican Restaurants
