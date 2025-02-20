@@ -1,11 +1,11 @@
 # Agent Examples
-
-For at least the next seven days my goal is to build an Assistant that uses some sort of interesting tool.
-
+For the next seven days, my goal is to build an Assistant that utilizes an interesting tool.
 
 ## Day 1 [Open Street Map Restaurant Finder](0-openstreet-map.rb)
 
-This assistant uses the Open Street Map API to search a city for restaurants of different types of Cusiens
+This assistant uses the Open Street Map [OverPass API](https://wiki.openstreetmap.org/wiki/Overpass_API) to search for restaurants of various cuisines in a city.
+
+Initially, I attempted to create a single OverPass Query to search for multiple cuisines, but the langchain ended up making three separate tool calls to the Overpass API (which was good enough at 11:30 at night.
 
 > User: What are some Mexican, Chinese or Mediterrian resturants in Houston?' 
 
