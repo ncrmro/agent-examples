@@ -13,3 +13,5 @@ gem "rubocop", "~> 1.72", :groups => [:development, :test]
 gem "ruby-openai", "~> 7.4"
 
 gem "reline", "~> 0.6.0"
+
+gem "rss", "~> 0.3.1"

@@ -1,6 +1,99 @@
 # Agent Examples
 For the next seven days, my goal is to build an Assistant that utilizes an interesting tool.
 
+I'm pasting the whoe message history
+
+## Day 3 [Choosing Stocks or Options off RSS feeds](2-stock-rss.rb)
+
+RSS feeds are kind of dying but I did manage to get a pretty simple agent that would pick some
+intersting stocks to look at (THIS IS NOT INVESTMENT ADVICE)
+
+This could be taken pretty far but again its 11:30pm as I finish this.
+
+Note it called the RSS tool three times expecting diffrent results.
+
+```
+Assistant Instructions: You are an expert stock analyst.
+User: What are three stocks or options you would purchase today?
+Agent: 
+   Based on the recent news and developments, here are three stocks to consider purchasing today:
+   
+   1. **Rivian (RIVN)**: Rivian has recently hit a milestone, leading to a jump in its stock. Additionally, Rivian beat Wall Street's fourth-quarter expectations, which could indicate strong underlying performance.
+   
+   2. **Alibaba (BABA)**: Alibaba shares soared 11% in Hong Kong after stellar earnings, suggesting a recovery in China's e-commerce sector. Additionally, GameStop CEO Ryan Cohen increased his personal stake in Alibaba to $1 billion, which may reflect confidence in Alibaba's growth prospects.
+   
+   3. **Duolingo (DUOL)**: Duolingo was recently started at a "buy" with a $222 price target at Seaport. This indicates positive analyst sentiment and potential for growth.
+   
+   These stocks reflect a mix of positive earnings news, strategic investments, and analyst upgrades, making them attractive options to consider.
+```
+```
+
+<details>
+<summary>Full Messages including tool calls</summary>
+```
+[#<Langchain::Assistant::Messages::OpenAIMessage:0x00007ff3aabaf1f8
+  @content="You are an expert stock analyst.",
+  @image_url=nil,
+  @role="system",
+  @tool_call_id=nil,
+  @tool_calls=[]>,
+ #<Langchain::Assistant::Messages::OpenAIMessage:0x00007ff3aabaf1a8
+  @content="What are three stocks or options you would purchase today?",
+  @image_url=nil,
+  @role="user",
+  @tool_call_id=nil,
+  @tool_calls=[]>,
+ #<Langchain::Assistant::Messages::OpenAIMessage:0x00007ff3aaba0608
+  @content="",
+  @image_url=nil,
+  @role="assistant",
+  @tool_call_id=nil,
+  @tool_calls=
+   [{"id" => "call_383TkKscqziJZtRxBSn8yg65", "type" => "function", "function" => {"name" => "rss_feed_tool__get_news", "arguments" => "{}"}},
+    {"id" => "call_BrLIlVfBMwF95VIfp1QyaH7W", "type" => "function", "function" => {"name" => "rss_feed_tool__get_news", "arguments" => "{}"}},
+    {"id" => "call_3OM2XkSi1HWrJeVU7C0pXmqN", "type" => "function", "function" => {"name" => "rss_feed_tool__get_news", "arguments" => "{}"}}]>,
+ #<Langchain::Assistant::Messages::OpenAIMessage:0x00007ff3a97acbd8
+  @content=
+   "Swiss National Bank cuts interest rates by a half point to 0.5%, Dollar jumps 0.5% to 0.8890 francs, Germany flash manufacturing PMI rises to 4-month high of 43.2, Germany flash services PMI falls to 9-month low of 49.4, Powell says labor market not a source of significant inflation pressure, Fed’s Powell says rate cut ‘on the table’ as soon as September, Final S&P U.S. manufacturing index is 52.2 in February vs. initial 51.5, Duolingo started at buy with $222 price target at Seaport, Housing starts fall 14.8% in January after revised 3.3% gain in December, Building permits fall 1.5% in January, The stock market’s previous breakneck pace is slowing down. What's next?, Stocks feel pressure after Walmart's guidance renews worries about U.S. consumer, Electric-truck maker Rivian hits a milestone, and its stock jumps, Dow ends down 450 points as Walmart’s tepid outlook weighs on U.S. stocks, Dow losing over 500 points in final hour of trade as Walmart drags market down, Walmart is the Dow’s worst performer today. Analysts aren’t nervous., The Chips Act may be dead. That’s another big hurdle for semiconductor stocks., Wall Street wants to know if DOGE-led job cuts will tip U.S. into recession, There are growing signs that the labor market is slowing, Fed’s Bostic says, Satya Nadella says he’s not an economist — and proved it with this misconception, Meta approves plan for bigger executive bonuses following 5% layoffs, Amazon surpasses Walmart in revenue for the first time, Rivian beats Wall Street's fourth-quarter expectations, but expects lower deliveries in 2025, Walmart, Palantir and inflation concerns: What investors think was behind Thursday's sell-off, Alibaba shares soar 11% in Hong Kong after stellar earnings as China's e-commerce sector recovers, China backs Trump's Ukraine peace bid at G20 as U.S. allies rally behind Zelenskyy, Block shares fall on profit, revenue miss, Japan's inflation rate climbs to a 2-year high of 4% in January, supporting rate hike calls from BOJ members, Hong Kong shares hit three-year high as investors weigh Japan inflation data, Trump tariff threats, DOGE cuts nearly half of unit overseeing autonomous vehicles safety, report says, How Walmart won over wealthy shoppers, Trump says his administration will check Fort Knox 'to make sure the gold is there', Kontoor Brands CEO describes growth plans for new acquisition , MLB, ESPN opt out of TV deal for 2026-28 seasons, JPMorgan's top biopharma picks for 2025, Josh Brown says Palantir is now trapped in a 'no-man's land' after stock momentum breaks, Judge rules against union bid to block mass federal layoffs by Trump, Walmart shares drop as retailer says profit growth will slow, Texas Roadhouse gets off to slower current quarter start. But nothing it can't handle, New York Gov. Hochul won't remove Mayor Eric Adams 'at this time', Crypto firms ask Congress to roll back IRS rules for DeFi: CNBC Crypto World, How do I pay my taxes with a credit card?, Moscow loathed the U.S. for years as its economy paid a high price for war — now, it’s doing a U-turn, GameStop CEO Ryan Cohen hikes his personal stake in Alibaba to $1 billion, WSJ says, U.S. says it will drop immigration case against SpaceX, Senate confirms Kash Patel as FBI director, Friday’s big stock stories: What’s likely to move the market in the next trading session, Sen. Elizabeth Warren: DOGE's FDIC firings put banking system at risk, Palantir drops for a second day as cult stock loses momentum, Amazon to gain creative control of James Bond franchise from Broccoli family",
+  @image_url=nil,
+  @role="tool",
+  @tool_call_id="call_383TkKscqziJZtRxBSn8yg65",
+  @tool_calls=[]>,
+ #<Langchain::Assistant::Messages::OpenAIMessage:0x00007ff3a975a478
+  @content=
+   "Swiss National Bank cuts interest rates by a half point to 0.5%, Dollar jumps 0.5% to 0.8890 francs, Germany flash manufacturing PMI rises to 4-month high of 43.2, Germany flash services PMI falls to 9-month low of 49.4, Powell says labor market not a source of significant inflation pressure, Fed’s Powell says rate cut ‘on the table’ as soon as September, Final S&P U.S. manufacturing index is 52.2 in February vs. initial 51.5, Duolingo started at buy with $222 price target at Seaport, Housing starts fall 14.8% in January after revised 3.3% gain in December, Building permits fall 1.5% in January, The stock market’s previous breakneck pace is slowing down. What's next?, Stocks feel pressure after Walmart's guidance renews worries about U.S. consumer, Electric-truck maker Rivian hits a milestone, and its stock jumps, Dow ends down 450 points as Walmart’s tepid outlook weighs on U.S. stocks, Dow losing over 500 points in final hour of trade as Walmart drags market down, Walmart is the Dow’s worst performer today. Analysts aren’t nervous., The Chips Act may be dead. That’s another big hurdle for semiconductor stocks., Wall Street wants to know if DOGE-led job cuts will tip U.S. into recession, There are growing signs that the labor market is slowing, Fed’s Bostic says, Satya Nadella says he’s not an economist — and proved it with this misconception, Meta approves plan for bigger executive bonuses following 5% layoffs, Amazon surpasses Walmart in revenue for the first time, Rivian beats Wall Street's fourth-quarter expectations, but expects lower deliveries in 2025, Walmart, Palantir and inflation concerns: What investors think was behind Thursday's sell-off, Alibaba shares soar 11% in Hong Kong after stellar earnings as China's e-commerce sector recovers, China backs Trump's Ukraine peace bid at G20 as U.S. allies rally behind Zelenskyy, Block shares fall on profit, revenue miss, Japan's inflation rate climbs to a 2-year high of 4% in January, supporting rate hike calls from BOJ members, Hong Kong shares hit three-year high as investors weigh Japan inflation data, Trump tariff threats, DOGE cuts nearly half of unit overseeing autonomous vehicles safety, report says, How Walmart won over wealthy shoppers, Trump says his administration will check Fort Knox 'to make sure the gold is there', Kontoor Brands CEO describes growth plans for new acquisition , MLB, ESPN opt out of TV deal for 2026-28 seasons, JPMorgan's top biopharma picks for 2025, Josh Brown says Palantir is now trapped in a 'no-man's land' after stock momentum breaks, Judge rules against union bid to block mass federal layoffs by Trump, Walmart shares drop as retailer says profit growth will slow, Texas Roadhouse gets off to slower current quarter start. But nothing it can't handle, New York Gov. Hochul won't remove Mayor Eric Adams 'at this time', Crypto firms ask Congress to roll back IRS rules for DeFi: CNBC Crypto World, How do I pay my taxes with a credit card?, Moscow loathed the U.S. for years as its economy paid a high price for war — now, it’s doing a U-turn, GameStop CEO Ryan Cohen hikes his personal stake in Alibaba to $1 billion, WSJ says, U.S. says it will drop immigration case against SpaceX, Senate confirms Kash Patel as FBI director, Friday’s big stock stories: What’s likely to move the market in the next trading session, Sen. Elizabeth Warren: DOGE's FDIC firings put banking system at risk, Palantir drops for a second day as cult stock loses momentum, Amazon to gain creative control of James Bond franchise from Broccoli family",
+  @image_url=nil,
+  @role="tool",
+  @tool_call_id="call_BrLIlVfBMwF95VIfp1QyaH7W",
+  @tool_calls=[]>,
+ #<Langchain::Assistant::Messages::OpenAIMessage:0x00007ff3a9859ba8
+  @content=
+   "Swiss National Bank cuts interest rates by a half point to 0.5%, Dollar jumps 0.5% to 0.8890 francs, Germany flash manufacturing PMI rises to 4-month high of 43.2, Germany flash services PMI falls to 9-month low of 49.4, Powell says labor market not a source of significant inflation pressure, Fed’s Powell says rate cut ‘on the table’ as soon as September, Final S&P U.S. manufacturing index is 52.2 in February vs. initial 51.5, Duolingo started at buy with $222 price target at Seaport, Housing starts fall 14.8% in January after revised 3.3% gain in December, Building permits fall 1.5% in January, The stock market’s previous breakneck pace is slowing down. What's next?, Stocks feel pressure after Walmart's guidance renews worries about U.S. consumer, Electric-truck maker Rivian hits a milestone, and its stock jumps, Dow ends down 450 points as Walmart’s tepid outlook weighs on U.S. stocks, Dow losing over 500 points in final hour of trade as Walmart drags market down, Walmart is the Dow’s worst performer today. Analysts aren’t nervous., The Chips Act may be dead. That’s another big hurdle for semiconductor stocks., Wall Street wants to know if DOGE-led job cuts will tip U.S. into recession, There are growing signs that the labor market is slowing, Fed’s Bostic says, Satya Nadella says he’s not an economist — and proved it with this misconception, Meta approves plan for bigger executive bonuses following 5% layoffs, Amazon surpasses Walmart in revenue for the first time, Rivian beats Wall Street's fourth-quarter expectations, but expects lower deliveries in 2025, Walmart, Palantir and inflation concerns: What investors think was behind Thursday's sell-off, Alibaba shares soar 11% in Hong Kong after stellar earnings as China's e-commerce sector recovers, China backs Trump's Ukraine peace bid at G20 as U.S. allies rally behind Zelenskyy, Block shares fall on profit, revenue miss, Japan's inflation rate climbs to a 2-year high of 4% in January, supporting rate hike calls from BOJ members, Hong Kong shares hit three-year high as investors weigh Japan inflation data, Trump tariff threats, DOGE cuts nearly half of unit overseeing autonomous vehicles safety, report says, How Walmart won over wealthy shoppers, Trump says his administration will check Fort Knox 'to make sure the gold is there', Kontoor Brands CEO describes growth plans for new acquisition , MLB, ESPN opt out of TV deal for 2026-28 seasons, JPMorgan's top biopharma picks for 2025, Josh Brown says Palantir is now trapped in a 'no-man's land' after stock momentum breaks, Judge rules against union bid to block mass federal layoffs by Trump, Walmart shares drop as retailer says profit growth will slow, Texas Roadhouse gets off to slower current quarter start. But nothing it can't handle, New York Gov. Hochul won't remove Mayor Eric Adams 'at this time', Crypto firms ask Congress to roll back IRS rules for DeFi: CNBC Crypto World, How do I pay my taxes with a credit card?, Moscow loathed the U.S. for years as its economy paid a high price for war — now, it’s doing a U-turn, GameStop CEO Ryan Cohen hikes his personal stake in Alibaba to $1 billion, WSJ says, U.S. says it will drop immigration case against SpaceX, Senate confirms Kash Patel as FBI director, Friday’s big stock stories: What’s likely to move the market in the next trading session, Sen. Elizabeth Warren: DOGE's FDIC firings put banking system at risk, Palantir drops for a second day as cult stock loses momentum, Amazon to gain creative control of James Bond franchise from Broccoli family",
+  @image_url=nil,
+  @role="tool",
+  @tool_call_id="call_3OM2XkSi1HWrJeVU7C0pXmqN",
+  @tool_calls=[]>,
+ #<Langchain::Assistant::Messages::OpenAIMessage:0x00007ff3a98528f8
+  @content=
+   "Based on the recent news and developments, here are three stocks to consider purchasing today:\n" +
+   "\n" +
+   "1. **Rivian (RIVN)**: Rivian has recently hit a milestone, leading to a jump in its stock. Additionally, Rivian beat Wall Street's fourth-quarter expectations, which could indicate strong underlying performance.\n" +
+   "\n" +
+   "2. **Alibaba (BABA)**: Alibaba shares soared 11% in Hong Kong after stellar earnings, suggesting a recovery in China's e-commerce sector. Additionally, GameStop CEO Ryan Cohen increased his personal stake in Alibaba to $1 billion, which may reflect confidence in Alibaba's growth prospects.\n" +
+   "\n" +
+   "3. **Duolingo (DUOL)**: Duolingo was recently started at a \"buy\" with a $222 price target at Seaport. This indicates positive analyst sentiment and potential for growth.\n" +
+   "\n" +
+   "These stocks reflect a mix of positive earnings news, strategic investments, and analyst upgrades, making them attractive options to consider.",
+  @image_url=nil,
+  @role="assistant",
+  @tool_call_id=nil,
+  @tool_calls=[]>]
+```
+
+</details>
+
+
+
 ## Day 2 [The Meal DB](https://www.themealdb.com/api.php)
 
 The Meal DB is a pretty inflexible API allowing you to search the title of a recipe, category, or single ingredient.
@@ -15,6 +108,11 @@ The assistant can then pull the rest of the recipe once it finds a good match. A
 * Generic queries like "I need to do something with this shrimp" or "my kids want pancakes."
 
 Lastly, I updated its prompt instructing it to improvise a recipe if none was found.
+
+
+<details>
+<summary>Full Messages including tool calls</summary>
+
 ```
 [#<Langchain::Assistant::Messages::OpenAIMessage:0x00007fa9a6f620f0
   @content="You're a helpful AI assistant that can search for meal recipies",
@@ -116,8 +214,8 @@ Lastly, I updated its prompt instructing it to improvise a recipe if none was fo
   @tool_call_id=nil,
   @tool_calls=[]>]
 ```
-```
-```
+
+</details>
 
 ## Day 1 [Open Street Map Restaurant Finder](0-openstreet-map.rb)
 
