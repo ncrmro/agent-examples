@@ -12,10 +12,11 @@ This could be taken pretty far but again its 11:30pm as I finish this.
 
 Note it called the RSS tool three times expecting diffrent results.
 
+
 ```
-Assistant Instructions: You are an expert stock analyst.
+Agent Instructinos: You are an expert stock analyst.
 User: What are three stocks or options you would purchase today?
-Agent: 
+Agent:
    Based on the recent news and developments, here are three stocks to consider purchasing today:
    
    1. **Rivian (RIVN)**: Rivian has recently hit a milestone, leading to a jump in its stock. Additionally, Rivian beat Wall Street's fourth-quarter expectations, which could indicate strong underlying performance.
@@ -26,10 +27,11 @@ Agent:
    
    These stocks reflect a mix of positive earnings news, strategic investments, and analyst upgrades, making them attractive options to consider.
 ```
-```
+
 
 <details>
 <summary>Full Messages including tool calls</summary>
+
 ```
 [#<Langchain::Assistant::Messages::OpenAIMessage:0x00007ff3aabaf1f8
   @content="You are an expert stock analyst.",
@@ -89,7 +91,6 @@ Agent:
   @tool_call_id=nil,
   @tool_calls=[]>]
 ```
-
 </details>
 
 
@@ -109,6 +110,48 @@ The assistant can then pull the rest of the recipe once it finds a good match. A
 
 Lastly, I updated its prompt instructing it to improvise a recipe if none was found.
 
+```
+Agent Instructinos: You're a helpful AI assistant that can search for meal recipies
+User: Find a Thai Curry Recipe 
+Agent:
+ **Ingredients:**
+ - Potatoes
+ - Green beans
+ - Oil
+ - Garlic
+ - Green curry paste
+ - Coconut milk
+ - Fish sauce
+ - Sugar
+ - Chicken pieces
+ - Lime leaves (or lime zest)
+ - Basil leaves
+ - Lime for garnish
+ **Instructions:**
+ 1. **Cook the Vegetables:**
+    - Put the potatoes in a pan of boiling water and cook for 5 minutes.
+    - Add the beans and cook for a further 3 minutes until both are just tender. Drain and set aside.
+ 
+ 2. **Prepare the Curry:**
+    - In a wok or large frying pan, heat the oil until very hot.
+    - Add the garlic and cook until golden, being careful not to let it go too dark.
+    - Add the curry paste and stir for a few seconds to release the flavors.
+ 
+ 3. **Simmer the Curry:**
+    - Pour in the coconut milk and let it come to a bubble.
+    - Stir in the fish sauce and sugar, then add the chicken pieces.
+    - Turn the heat down to a simmer and cook, covered, for about 8 minutes until the chicken is cooked.
+ 
+ 4. **Add Vegetables and Flavorings:**
+    - Add the potatoes and beans, warming them through in the hot coconut milk.
+    - Stir in the shredded lime leaves (or lime zest) for a citrussy flavor.
+    - Add the basil leaves briefly to maintain their brightness.
+ 
+ 5. **Serve:**
+    - Garnish with lime and serve immediately with boiled rice.
+ 
+ Enjoy your delicious Thai Green Curry!
+```
 
 <details>
 <summary>Full Messages including tool calls</summary>
@@ -216,6 +259,43 @@ Lastly, I updated its prompt instructing it to improvise a recipe if none was fo
 ```
 
 </details>
+
+Asking for a recipe that isn't found in the database.
+
+```markdown
+User: I need a cornbread recipe
+Agent:
+It seems like there isn't a specific cornbread recipe available in the database I have access to. However, I can help you create a simple and delicious cornbread recipe right here:
+
+### Simple Cornbread Recipe
+
+#### Ingredients:
+- 1 cup cornmeal
+- 1 cup all-purpose flour
+- 1/4 cup granulated sugar
+- 1 tablespoon baking powder
+- 1/2 teaspoon salt
+- 1 cup milk
+- 1/3 cup vegetable oil or melted butter
+- 2 large eggs
+
+#### Instructions:
+1. **Preheat the Oven**: Preheat your oven to 400°F (200°C). Grease an 8-inch square baking dish or a cast-iron skillet.
+
+2. **Mix Dry Ingredients**: In a large bowl, combine the cornmeal, flour, sugar, baking powder, and salt. Stir until well mixed.
+
+3. **Combine Wet Ingredients**: In another bowl, whisk together the milk, vegetable oil (or melted butter), and eggs until well combined.
+
+4. **Combine Wet and Dry Ingredients**: Pour the wet ingredients into the dry ingredients. Stir until just combined. Be careful not to overmix; it's okay if there are a few lumps.
+
+5. **Pour and Bake**: Pour the batter into the prepared baking dish or skillet. Spread it evenly with a spatula.
+
+6. **Bake**: Bake in the preheated oven for 20-25 minutes, or until the top is golden brown and a toothpick inserted into the center comes out clean.
+
+7. **Cool and Serve**: Allow the cornbread to cool slightly before slicing. Serve warm, preferably with butter or honey.
+
+Enjoy your homemade cornbread! If you have any special dietary requirements or preferences, let me know, and I can suggest some modifications.
+```
 
 ## Day 1 [Open Street Map Restaurant Finder](0-openstreet-map.rb)
 
