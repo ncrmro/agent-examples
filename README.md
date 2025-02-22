@@ -1,7 +1,70 @@
 # Agent Examples
 For the next seven days, my goal is to build an Assistant that utilizes an interesting tool.
 
-I'm pasting the whoe message history
+
+## Day 4 [Summerizing Gitea Repo](3-gitea-agent/gitea_api.py)
+
+Initially, I was hoping to do something interesting where the agent responded to webhooks.
+
+But it's currently 11:40, and I just finished having it where it can list the contents of a git directory and read files.
+
+I also used Python this time, and it's a lot more extensive than langchainrb.
+
+In a repo with only a single README, it first lists the contents and then reads the README.
+
+```
+System Prompt: You are a helpful assistant that has access to a Git repos via a Git API.
+User: 'What is the contents of admin/Test'
+First Tool Response: '["README.md"]'
+Second Tool Response: ('# TODOs\n'
+ '\n'
+ 'This application stores todos. It uses Python and Flask and stores the Todo '
+ 'in a Sqlite database.')
+Agent Response: ('The contents of the `admin/Test` repository include a single file, '
+ '`README.md`, which contains the following information:\n'
+ '\n'
+ '```\n'
+ '# TODOs\n'
+ '\n'
+ 'This application stores todos. It uses Python and Flask and stores the Todo '
+ 'in a Sqlite database.\n'
+ '```')
+```
+
+I imported my [dotfiles](https://github.com/ncrmro/dotfiles) and got this response 
+
+```
+('The contents of the `admin/dotfiles` directory include the following files '
+ 'and directories:\n'
+ '\n'
+ '- `.stowrc`\n'
+ '- `README.md`\n'
+ '- `git`\n'
+ '- `nvim`\n'
+ '- `ruby`\n'
+ '- `setup-codespaces.sh`\n'
+ '- `setup.sh`\n'
+ '- `zsh` \n'
+ '\n'
+ 'If you want to explore any specific file or directory further, let me know!')
+```
+
+
+<details>
+<summary>Full Messages including tool calls</summary>
+
+```
+HumanMessage(content='What is the contents of admin/Test', additional_kwargs={}, response_metadata={}, id='5a499a80-dd60-4ec3-a11a-cb8c84f2c7db')
+AIMessage(content='', additional_kwargs={'tool_calls': [{'id': 'call_5qnGEt9fdvxKaFziWd02jQkO', 'function': {'arguments': '{"owner":"admin","repo":"Test"}', 'name': 'get_repo_content'}, 'type': 'function'}], 'refusal': None}, response_metadata={'token_usage': {'completion_tokens': 20, 'prompt_tokens': 123, 'total_tokens': 143, 'completion_tokens_details': {'accepted_prediction_tokens': 0, 'audio_tokens': 0, 'reasoning_tokens': 0, 'rejected_prediction_tokens': 0}, 'prompt_tokens_details': {'audio_tokens': 0, 'cached_tokens': 0}}, 'model_name': 'gpt-4o-mini-2024-07-18', 'system_fingerprint': 'fp_709714d124', 'finish_reason': 'tool_calls', 'logprobs': None}, id='run-546ce635-3ff0-4e68-8915-d303e757c319-0', tool_calls=[{'name': 'get_repo_content', 'args': {'owner': 'admin', 'repo': 'Test'}, 'id': 'call_5qnGEt9fdvxKaFziWd02jQkO', 'type': 'tool_call'}], usage_metadata={'input_tokens': 123, 'output_tokens': 20, 'total_tokens': 143, 'input_token_details': {'audio': 0, 'cache_read': 0}, 'output_token_details': {'audio': 0, 'reasoning': 0}})
+ToolMessage(content='["README.md"]', name='get_repo_content', id='520a4011-0486-4992-9227-ae2d3807e104', tool_call_id='call_5qnGEt9fdvxKaFziWd02jQkO')
+AIMessage(content='', additional_kwargs={'tool_calls': [{'id': 'call_2v98uMamvWwBPiqXXPFyl9je', 'function': {'arguments': '{"owner":"admin","repo":"Test","filepath":"README.md"}', 'name': 'get_repo_content'}, 'type': 'function'}], 'refusal': None}, response_metadata={'token_usage': {'completion_tokens': 25, 'prompt_tokens': 155, 'total_tokens': 180, 'completion_tokens_details': {'accepted_prediction_tokens': 0, 'audio_tokens': 0, 'reasoning_tokens': 0, 'rejected_prediction_tokens': 0}, 'prompt_tokens_details': {'audio_tokens': 0, 'cached_tokens': 0}}, 'model_name': 'gpt-4o-mini-2024-07-18', 'system_fingerprint': 'fp_709714d124', 'finish_reason': 'tool_calls', 'logprobs': None}, id='run-8956aee4-eab3-4496-a543-fcf4277cf72d-0', tool_calls=[{'name': 'get_repo_content', 'args': {'owner': 'admin', 'repo': 'Test', 'filepath': 'README.md'}, 'id': 'call_2v98uMamvWwBPiqXXPFyl9je', 'type': 'tool_call'}], usage_metadata={'input_tokens': 155, 'output_tokens': 25, 'total_tokens': 180, 'input_token_details': {'audio': 0, 'cache_read': 0}, 'output_token_details': {'audio': 0, 'reasoning': 0}})
+ToolMessage(content='# TODOs\n\nThis application stores todos. It uses Python and Flask and stores the Todo in a Sqlite database.', name='get_repo_content', id='a5aa65dc-84f9-4d97-a2df-3911c8e8a3fa', tool_call_id='call_2v98uMamvWwBPiqXXPFyl9je')
+AIMessage(content='The contents of the `admin/Test` repository include a single file, `README.md`, which contains the following information:\n\n```\n# TODOs\n\nThis application stores todos. It uses Python and Flask and stores the Todo in a Sqlite database.\n```', additional_kwargs={'refusal': None}, response_metadata={'token_usage': {'completion_tokens': 53, 'prompt_tokens': 212, 'total_tokens': 265, 'completion_tokens_details': {'accepted_prediction_tokens': 0, 'audio_tokens': 0, 'reasoning_tokens': 0, 'rejected_prediction_tokens': 0}, 'prompt_tokens_details': {'audio_tokens': 0, 'cached_tokens': 0}}, 'model_name': 'gpt-4o-mini-2024-07-18', 'system_fingerprint': 'fp_709714d124', 'finish_reason': 'stop', 'logprobs': None}, id='run-0f3175d5-384f-40c9-981e-2c9263a44363-0', usage_metadata={'input_tokens': 212, 'output_tokens': 53, 'total_tokens': 265, 'input_token_details': {'audio': 0, 'cache_read': 0}, 'output_token_details': {'audio': 0, 'reasoning': 0}})
+'What is the contents of admin/Test'
+
+```
+
+</details>
 
 ## Day 3 [Choosing Stocks or Options off RSS feeds](2-stock-rss.rb)
 

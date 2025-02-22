@@ -1,16 +1,19 @@
 import requests
 import base64
+from typing import Optional
+
+# Import things that are needed generically
+from langchain_core.tools import tool
+from langchain_openai import ChatOpenAI
+from langgraph.prebuilt import create_react_agent
+from langchain_core.messages import HumanMessage
+from pprint import pprint
 
 
-def get_repo_contents(url, filepath):
-    # Parse the URL to extract owner, repo, and ref
-    path_parts = url.split("/")[
-        3:
-    ]  # Split the URL and ignore the first 4 parts (http:, , localhost:3000, admin)
-    owner = path_parts[0]  # str | owner of the repo
-    repo = path_parts[1]  # str | name of the repo
-    ref = path_parts[-1]  # str | The name of the commit/branch/tag
-    url = f"http://gitea:3000/api/v1/repos/{owner}/{repo}/contents/{filepath}?ref={ref}"
+# @tool
+def get_repo_content(owner: str, repo: str, filepath: Optional[str] = "") -> str | list:
+    """Return contents of a file or a list of files if filepath is a directory in a git directory. If no filepath is provided use /"""
+    url = f"http://gitea:3000/api/v1/repos/{owner}/{repo}/contents/{filepath}"
     headers = {
         "accept": "application/json",
         "Authorization": "token 87282d54cd23a690e80f658e9043416f637ad469",
@@ -18,6 +21,8 @@ def get_repo_contents(url, filepath):
 
     response = requests.get(url, headers=headers)
     d = response.json()
+    if type(d) is list:
+        return [i["name"] for i in d]
     # Decode the base64-encoded content
     decoded_bytes = base64.b64decode(d["content"])
 
@@ -26,10 +31,34 @@ def get_repo_contents(url, filepath):
     return decoded_string
 
 
-# Call the function with the example URL and the README.md file
-c = get_repo_contents(
-    "http://localhost:3000/admin/Test/commit/24447a4339ab18618bd2dcb2935fb26fe036322c",
-    "README.md",
+llm = ChatOpenAI(model="gpt-4o-mini")
+
+tools = [get_repo_content]
+prompt = (
+    "You are a helpful assistant that has access to a Git repos via a Git API. "
+    "You may not need to use tools for every query - the user may just want to chat!"
 )
 
-print(c)
+# with this prompt string before any other messages sent to the model
+agent = create_react_agent(llm, tools, prompt=prompt)
+
+
+res = agent.invoke(
+    {"messages": [HumanMessage(content="What is the contents of admin/dotfiles")]}
+)
+
+for m in res["messages"]:
+    pprint(m)
+
+for m in res["messages"]:
+    if m.content != "":
+        pprint(m.content)
+
+# Call the function with the example URL and the README.md file
+# c = get_repo_content(
+#     "admin",
+#     "Test",
+#     #    "README.md",
+# )
+#
+# print(c)
