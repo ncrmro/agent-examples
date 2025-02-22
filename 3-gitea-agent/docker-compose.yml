@@ -1,0 +1,38 @@
+version: "3"
+
+# networks:
+#   gitea:
+#     external: false
+#
+services:
+  webserver:
+    container_name: web
+    build: webserver
+    volumes:
+      - ./webserver/:/app
+    ports:
+      - "5000:5000"
+    environment:
+      PYTHONUNBUFFERED: 1
+      FLASK_ENV: development
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+    # networks:
+    #   - gitea
+  gitea:
+    image: docker.io/gitea/gitea:1.23.4
+    container_name: gitea
+    environment:
+      - USER_UID=1000
+      - USER_GID=1000
+      - GITEA__webhook__ALLOWED_HOST_LIST=web
+      - GITEA__webhook__SKIP_TLS_VERIFY=true
+    restart: always
+    # networks:
+    #   - gitea
+    volumes:
+      - ./gitea:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - "3000:3000"
+      - "2222:22"
