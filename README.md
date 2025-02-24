@@ -1,6 +1,107 @@
 # Agent Examples
 For the next seven days, my goal is to build an Assistant that utilizes an interesting tool.
 
+## Day 5 [Collect information about user (and store in SQL database)](4-sql-persistance-life-planner/simple_cli.py)
+
+This agent collect users information and stores it in a simple sqlite table this can that summerize information about the user.
+
+<details>
+<summary>Full Message logs</summary>
+
+```
+  python simple_cli.py
+Bot: Hello! I am a chatbot. I can help you with anything you want to talk about.
+User: I love exploring new places.
+================================ Human Message =================================
+
+I love exploring new places.
+================================== Ai Message ==================================
+Tool Calls:
+  sql_db_list_tables (call_EvRcAdb0mlMicT0jfHmTYrCk)
+ Call ID: call_EvRcAdb0mlMicT0jfHmTYrCk
+  Args:
+================================= Tool Message =================================
+Name: sql_db_list_tables
+
+user_notes
+================================== Ai Message ==================================
+Tool Calls:
+  sql_db_query_checker (call_urlSKUeq8ihmx3fLeam7VJqP)
+ Call ID: call_urlSKUeq8ihmx3fLeam7VJqP
+  Args:
+    query: INSERT INTO user_notes (category, key, value) VALUES ('goal', NULL, 'exploring new places')
+  sql_db_query_checker (call_rGkndhwYM0gAy6frMQn33qNd)
+ Call ID: call_rGkndhwYM0gAy6frMQn33qNd
+  Args:
+    query: INSERT INTO user_notes (category, key, value) VALUES (NULL, NULL, 'exploring new places')
+================================= Tool Message =================================
+Name: sql_db_query_checker
+
+``sql
+INSERT INTO user_notes (category, key, value) VALUES (NULL, NULL, 'exploring new places')
+``
+================================== Ai Message ==================================
+Tool Calls:
+  sql_db_query (call_VrjTZc6ywTDYmRhESVrcsIoY)
+ Call ID: call_VrjTZc6ywTDYmRhESVrcsIoY
+  Args:
+    query: INSERT INTO user_notes (category, key, value) VALUES ('goal', NULL, 'exploring new places')
+================================= Tool Message =================================
+Name: sql_db_query
+
+
+================================== Ai Message ==================================
+
+I have stored the information that you love exploring new places as a goal in the database. If you have more details to share or anything else you'd like to add, feel free to let me know!
+User: Return a dossier from the user notes
+================================ Human Message =================================
+
+Return a dossier from the user notes
+================================== Ai Message ==================================
+Tool Calls:
+  sql_db_query (call_m7emwHa4u5fztYTUi711rdgs)
+ Call ID: call_m7emwHa4u5fztYTUi711rdgs
+  Args:
+    query: SELECT * FROM user_notes
+================================= Tool Message =================================
+Name: sql_db_query
+
+[(1, 'profile', 'birthday', '2001-10-01', 1740365143, 1740365143), (2, 'profile', 'name', 'john doe', None, None), (3, 'relationship', 'mother', 'jane doe', None, None), (4, 'relationship', 'mother_birthday', '1994-01-01', None, None), (5, 'profile', 'allergy', 'nuts', None, None), (6, 'goal', 'travel_destination', 'China', None, None), (7, 'profile', 'salary', 90000, None, None), (8, 'profile', 'hobby', 'cooking and meal prep', None, None), (9, 'goal', 'travel_destination', 'space', None, None), (12, 'profile', 'favorite_food', 'Dosas', None, None), (13, 'profile', 'favorite_food', 'Dosas', None, None), (14, 'profile', 'favorite_food', 'fajitas', None, None), (15, 'profile', 'favorite_food', 'tacos', None, None), (16, 'goal', 'travel_destination', 'Mexico', None, None), (18, 'relationship', 'been_to', 'India', None, None), (19, 'goal', 'travel_destination', 'Mars', None, None), (20, 'profile', 'motorcycle_accident', 'head trauma', None, None), (21, 'relationship', 'partner', 'Suzin', None, None), (22, 'relationship', 'partner_birthday', '2001-03-02', None, None), (23, 'profile', 'job', 'Software Engineer', None, None), (24, 'profile', 'employment', 'Shell, 2000-2001', None, None), (25, 'profile', 'music_genre', 'Rock', None, None), (26, 'profile', 'birthplace', 'Houston', None, None), (27, 'profile', 'school', 'Borg High', None, None), (28, 'profile', 'school', 'Bastrop Elementary', None, None), (29, 'profile', 'school', 'Stevens Middle', None, None), (31, 'profile', 'favorite_book', 'A Fire Upon the Deep', None, None), (32, 'goal', None, 'exploring new places', None, None)]
+================================== Ai Message ==================================
+
+Here's the dossier from the user notes:
+
+### Profile
+- **Birthday:** 2001-10-01
+- **Name:** John Doe
+- **Allergy:** Nuts
+- **Salary:** 90,000
+- **Hobby:** Cooking and meal prep
+- **Favorite Food:** Dosas, Fajitas, Tacos
+- **Motorcycle Accident:** Head trauma
+- **Job:** Software Engineer
+- **Employment:** Shell, 2000-2001
+- **Music Genre:** Rock
+- **Birthplace:** Houston
+- **School:** Borg High, Bastrop Elementary, Stevens Middle
+- **Favorite Book:** A Fire Upon the Deep
+
+### Relationships
+- **Mother:** Jane Doe
+- **Mother's Birthday:** 1994-01-01
+- **Partner:** Suzin
+- **Partner's Birthday:** 2001-03-02
+- **Been to:** India
+
+### Goals
+- **Travel Destinations:** China, Space, Mexico, Mars
+- **Other Goals:** Exploring new places
+
+If you have more information to add or if there's anything else you would like to know, just let me know!
+
+```
+
+</details>
 
 ## Day 4 [Summerizing Gitea Repo](3-gitea-agent/gitea_api.py)
 
